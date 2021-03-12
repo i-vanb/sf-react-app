@@ -1,0 +1,80 @@
+header {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, .9);
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+@media screen and (min-width: 1200px) {
+    .header {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 1199px) {
+    .header {
+        justify-content: space-between;
+        padding: 20px;
+    }
+}
+
+.header__menu-icon {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.header__menu-icon.is-active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.header__logo {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+}
+
+@media screen and (max-width: 1199px) {
+    .header__logo {
+        position: static;
+    }
+}
+
+.header__nav__link {
+    margin: 0 30px;
+    text-decoration: none;
+    color: #1B1B1B;
+}
+
+.header__nav__link.is-active, .header__nav__link:hover {
+    color: #828282
+}
+
+
+.header__authBtn {
+    margin: 23px 40px;
+    padding: 11px 29px;
+    border: 1px solid rgba(27, 27, 27, 0.4);
+    background-color: #ffffff;
+    box-sizing: border-box;
+    border-radius: 6px;
+    color: #1B1B1B;
+    outline-style: none;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+.header__authBtn:hover {
+    background-color: rgba(27, 27, 27, 0.1);
+}

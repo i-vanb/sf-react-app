@@ -1,8 +1,53 @@
-html, body {
-    margin: 0;
-    padding: 0;
+.is-animated {
+    transition: all .4s ease;
 }
 
-h1 {
-    color: blue
+@media screen and (min-width: 1200px) {
+    .content-container {
+        width: 1050px;
+    }
 }
+
+@media screen and (max-width: 1199px) {
+    .content-container {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .content-container {
+        width: 100%;
+    }
+}
+
+.content-container {
+    margin: 0 auto;
+    text-align: center;
+}
+
+@media screen and (max-width: 1199px) {
+    .is-desktop {
+        display: none !important;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .is-mobile {
+        display: none !important;
+    }
+}
+
+section {
+    padding: 80px 0;
+}
+
+@media screen and (max-width: 767px) {
+    section {
+        padding: 40px 0;
+    }
+}
+
+/*@media screen and (min-width: 1200px) {}*/
+/*@media screen and (max-width: 1199px) {}*/
+/*@media screen and (max-width: 767px) {}*/
+
