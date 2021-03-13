@@ -78,3 +78,8 @@ header {
 .header__authBtn:hover {
     background-color: rgba(27, 27, 27, 0.1);
 }
+
+.btn-opacity {
+    background: none;
+    border-style: none
+}

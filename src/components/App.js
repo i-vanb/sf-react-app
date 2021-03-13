@@ -1,8 +1,6 @@
 import {
-    BrowserRouter as Router,
     Switch,
-    Route,
-    Link
+    Route
 } from "react-router-dom";
 import React from "react"
 import "../styles/App.css"
@@ -12,14 +10,23 @@ import About from "../About/About";
 import Header from "./Header";
 import MobileMenu from "./MobileMenu";
 import Footer from "./Footer";
+import Faq from "../Faq/Faq";
 
 function App() {
+
     return (
         <>
-            <Header />
-            <MobileMenu />
-            <About />
-            <Footer />
+            <Header/>
+            {/*<MobileMenu/>*/}
+            <Switch>
+                <Route path="/faq">
+                    <Faq/>
+                </Route>
+                <Route path="/">
+                    <About/>
+                </Route>
+            </Switch>
+            <Footer/>
         </>
     )
 }

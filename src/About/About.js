@@ -1,6 +1,4 @@
 import React from "react"
-import Header from "../components/Header";
-import MobileMenu from "../components/MobileMenu";
 import "../styles/About.css";
 import teamImg from "../img/about_team.svg"
 import teamMate1 from "../img/team/1.png"
@@ -13,12 +11,9 @@ import ProfileCard from "../components/ProfileCard";
 import ContactCard from "../components/ContactCard";
 
 
-
 function About() {
     return (
         <>
-            {/*<Header />*/}
-            {/*<MobileMenu />*/}
             <section className="about">
                 <div className="content-container">
                     <img src={teamImg} alt="drawn team" />
@@ -51,7 +46,6 @@ function About() {
                     </div>
                 </div>
             </section>
-
         </>
     )
 }

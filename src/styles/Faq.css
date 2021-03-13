@@ -1,0 +1,65 @@
+.faq {
+    padding-top: 0;
+}
+
+.faq__collapsible {
+    background-color: #F7F7F8;
+    color: #1B1B1B;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    border-radius: 6px;
+    font-size: 20px;
+    position: relative;
+}
+
+@media screen and (max-width: 767px) {
+    .faq__collapsible {
+        font-size: 14px;
+    }
+}
+
+.faq__collapsible_arrow {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    /*opacity: 1;*/
+}
+
+.faq__collapsible_arrow.is-active {
+    opacity: 1;
+}
+
+.faq__wrapper {
+    margin: 7px 20px;
+}
+
+.faq.active {
+    background-color: rgba(97, 161, 153, 0.1);
+    color: #61A199
+}
+
+.faq__collapsible:hover {
+    background-color: rgba(97, 161, 153, 0.1);
+}
+
+.faq__content {
+    padding: 0 18px;
+    display: block;
+    overflow: hidden;
+    text-align: left;
+}
+
+.faq__content_text {
+    font-size: 20px;
+}
+
+@media screen and (max-width: 767px) {
+    .faq__content_text {
+    font-size: 14px;
+    }
+}
+

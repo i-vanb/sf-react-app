@@ -32,6 +32,17 @@ module.exports = {
                     },
                 ],
             },
+            {
+                test: /\.(ttf|aot)$/,
+                use: [
+                    {
+                        loader: "file-loader",
+                        options: {
+                            name: 'font/[hash]-[name].[ext]'
+                        }
+                    }
+                ]
+            }
         ]
     },
     plugins: [
