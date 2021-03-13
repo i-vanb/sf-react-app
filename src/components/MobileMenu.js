@@ -18,7 +18,7 @@ function MobileMenu(props) {
                     <img id="close-menu" src={closeIcon} alt="logo"/>
                 </button>
             </div>
-            <nav className="menu__mobile__nav">
+            <nav className="menu__mobile__nav" onClick={closeHandler}>
                 <Link className="menu__mobile__nav_link" to="/">О Нас</Link>
                 <Link className="menu__mobile__nav_link" to="/">Условия</Link>
                 <Link className="menu__mobile__nav_link" to="/faq">Частые вопросы</Link>
