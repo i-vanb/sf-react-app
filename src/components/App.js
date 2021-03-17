@@ -2,9 +2,9 @@ import {
     Switch,
     Route
 } from "react-router-dom";
-import React from "react"
-import "../styles/App.css"
-import "../styles/Normalize.css"
+import React from "react";
+import "../styles/App.css";
+import "../styles/Normalize.css";
 import Home from "../Home/Home";
 import About from "../About/About";
 import Header from "./Header";
