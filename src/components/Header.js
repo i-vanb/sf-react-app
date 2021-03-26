@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import {Link} from "react-router-dom";
-import "../styles/Header.css"
+// import "../styles/Header.css"
 import logo from "../img/Logo.svg"
 import burgerMenuIcon from "../img/burger-menu.svg"
 import MobileMenu from "./MobileMenu";

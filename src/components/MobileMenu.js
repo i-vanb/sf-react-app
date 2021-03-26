@@ -1,8 +1,8 @@
 import React from "react"
 import {Link} from "react-router-dom"
 
-import "../styles/MobileMenu.css"
-import "../styles/Header.css"
+// import "../styles/MobileMenu.css"
+// import "../styles/Header.css"
 import logo from "../img/Logo.svg"
 import closeIcon from "../img/close.svg"
 

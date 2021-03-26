@@ -2,10 +2,11 @@
     margin-top: 40px;
 }
 
-@media screen and (max-width: 1199px) {
-    .about > img {
+@media screen and (max-width: 480px) {
+    .about img {
         width: 90%;
     }
+
 }
 
 .about__text {
@@ -131,6 +132,7 @@
         font-size: 16px;
         margin: 0;
     }
+
 }
 
 .team__cards_item_pro {
@@ -144,5 +146,6 @@
         font-size: 12px;
         margin: 0;
     }
+
 }
 

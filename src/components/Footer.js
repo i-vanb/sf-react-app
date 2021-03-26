@@ -1,5 +1,5 @@
 import React from "react"
-import "../styles/Footer.css"
+// import "../styles/Footer.css"
 import vk from "../img/sm_icons/1.svg"
 import inst from "../img/sm_icons/2.svg"
 import fb from "../img/sm_icons/3.svg"

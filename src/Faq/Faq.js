@@ -1,7 +1,8 @@
 import React from "react";
-import "../styles/Faq.css";
+// import "../styles/Faq.css";
 import faqImg from "../img/faq-image.svg";
 import QuestionCard from "../components/QuestionCard";
+import Footer from "../components/Footer";
 
 
 function Faq() {
@@ -43,6 +44,7 @@ function Faq() {
                     />
                 </div>
             </section>
+            <Footer />
         </>
     )
 }

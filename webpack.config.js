@@ -7,6 +7,13 @@ module.exports = {
     output: {
         path: path.join(__dirname, '/dist'),
         filename: "bundle.js",
+        publicPath: '/'
+    },
+    devServer: {
+        contentBase: './dist',
+        port: 8080,
+        hot: true,
+        historyApiFallback: true
     },
     module: {
         rules: [

@@ -1,5 +1,5 @@
 import React from "react"
-import "../styles/About.css";
+// import "../styles/About.css";
 import teamImg from "../img/about_team.svg"
 import teamMate1 from "../img/team/1.png"
 import teamMate2 from "../img/team/2.png"
@@ -9,6 +9,7 @@ import teamMate5 from "../img/team/5.png"
 import teamMate6 from "../img/team/6.png"
 import ProfileCard from "../components/ProfileCard";
 import ContactCard from "../components/ContactCard";
+import Footer from "../components/Footer";
 
 
 function About() {
@@ -46,6 +47,7 @@ function About() {
                     </div>
                 </div>
             </section>
+            <Footer />
         </>
     )
 }

@@ -1,0 +1,166 @@
+.register {
+    /*position: relative;*/
+}
+
+.blockInput {
+    display: block;
+    position: relative;
+}
+
+.register__header {
+    text-align: center;
+}
+
+.register__form {
+    width: 625px;
+    text-align: left;
+    margin: auto;
+}
+
+.register__header__pageNumber {
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: normal;
+    color: #828282;
+    margin-bottom: 14px;
+}
+
+.register__header__title {
+    font-size: 64px;
+    line-height: 77px;
+    margin: 0 0 52px;
+}
+
+.register__title {
+    font-size: 36px;
+    line-height: 53px;
+    margin: 0 0 44px;
+}
+
+.register__blockInput {
+    display: flex;
+    align-items: baseline;
+    position: relative;
+}
+
+.register__blockInput > span {
+    width: 200px;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 16px;
+    color: #1B1B1B;
+    font-weight: normal;
+    /*align-self: center;*/
+}
+
+.register__blockInput > input, .datePicker {
+    position: relative;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #E0E0E0;
+    border-radius: 6px;
+    width: 155px;
+    height: 44px;
+    margin-bottom: 34px;
+    padding-left: 12px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    outline: none;
+}
+
+.register__blockInput > input.w100 {
+    width: 416px;
+}
+.register__blockInput > input:focus, .datePicker:focus {
+    border-color: #61A199;
+    /*border-width: 2px;*/
+}
+.register__blockInput>input::placeholder, .datePicker::placeholder{
+    color: #E0E0E0
+}
+
+.register__footer {
+    height: 84px;
+    width: 100%;
+    border-top: #E0E0E0 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.register__footer button {
+    border: none;
+    width: 176px;
+    height: 51px;
+    background: #61A199;
+    border-radius: 6px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    /*color: #B4B5BD;*/
+    outline: none;
+}
+.register__footer button:disabled {
+    background: #E6E6E6;
+    color: #B4B5BD;
+}
+
+@media screen and (max-width: 768px) {
+    .register__footer button, .register input, .register input.w100, .datePicker {
+        width: 100%;
+    }
+    .register__footer button {
+        margin: 0 20px;
+    }
+    .register__form {
+        width: inherit;
+        padding: 0 20px;
+    }
+    .register__header__pageNumber {
+        font-size: 12px;
+        line-height: 147.3%;
+    }
+
+    .register__header__title {
+        font-size: 32px;
+        line-height: 120%;
+    }
+
+    .register__title {
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 120%;
+    }
+
+    .register__blockInput span {
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 16px;
+    }
+}
+
+.isPSWHidden {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}
+
+.isError {
+    border-color: red!important;
+}
+
+.error {
+    position: absolute;
+    left: 30%;
+    bottom: 10px;
+    color: red!important;
+}
+
+/*.inputWrapper {*/
+/*    position: relative;*/
+/*    */
+/*}*/
