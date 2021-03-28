@@ -1,32 +1,32 @@
-import React, {useState, useEffect} from "react"
+import React, {useState} from "react"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css";
 import calendarIcon from "../img/calendar-icon.svg"
 import eyeHiddenIcon from "../img/eye-icon.svg"
 import eyeIcon from "../img/eye-open-icon.svg"
 
+import Loader from "react-loader-spinner";
+
 
 export const Register = () => {
     const [birthDate, setBirthDate] = useState('');
     const [datePassport, setDatePassport] = useState('');
     const [dateLicence, setDateLicence] = useState('')
-
     const [name, setName] = useState('')
-    const [date, setDate] = useState('')
     const [mail, setMail] = useState('')
     const [phone, setPhone] = useState('')
     const [numPassport, setNumPassport] = useState('')
-    // const [datePassport, setDatePassport] = useState('')
     const [orgPassport, setOrgPassport] = useState('')
     const [codePassport, setCodePassport] = useState('')
     const [numLicence, setNumLicence] = useState('')
-    // const [dateLicence, setDateLicence] = useState('')
     const [password, setPassword] = useState('')
     const [repeatPassword, setRepeatPassword] = useState('')
     const [isHiddenPsw, setIsHiddenPsw] = useState(true)
     const [isHiddenRePsw, setIsHiddenRePsw] = useState(true)
     const [isRepeatPasswordError, setIsRepeatPasswordError] = useState(false)
-    const [isPasswordError, setIsPasswordError] = useState(false)
+    const [error, setError] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
+    const [servererror, setServerError] = useState(false)
 
 
     const checkPasswordRepeat = () => {
@@ -40,9 +40,37 @@ export const Register = () => {
         setIsHiddenPsw(true)
     }
 
-    const passwordHandler = () => {}
-    const repeatPasswordHandler = () => {
+    const fetchHandler = () => {
+        setIsLoading(true)
+        applyInfo().then((data) => {
+            setIsLoading(false)
+            console.log(data)
+        }).catch(()=> {
+            setServerError(true)
+            setIsLoading(false)
+            setTimeout(()=>setServerError(false), 3000)
+        })
+    }
 
+    async function applyInfo() {
+        const response = fetch('http://localhost:8000/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name, mail, phone,
+                birth_date: birthDate,
+                passport_number: numPassport,
+                passport_date: datePassport,
+                passport_vendor: orgPassport,
+                passport_code: codePassport,
+                licence_number: numLicence,
+                licence_date: dateLicence,
+                password
+            })
+        })
+        return await response
     }
 
     return (
@@ -60,7 +88,8 @@ export const Register = () => {
                 </label>
                 <label className="register__blockInput">
                     <span>Дата рождения</span>
-                    <DatePicker className="datePicker" selected={birthDate} onChange={date => setBirthDate(date)} />
+                    <DatePicker className="datePicker" selected={birthDate} onChange={date => setBirthDate(date)}/>
+                    <img src={calendarIcon} className="calendarIcon"/>
                     {/*<input type="text" value={date}*/}
                     {/*       onChange={(e) => setDate(e.target.value)}/>*/}
                 </label>
@@ -86,7 +115,9 @@ export const Register = () => {
                     <span>Дата выдачи</span>
                     {/*<input type="text" value={datePassport}*/}
                     {/*       onChange={(e) => setDatePassport(e.target.value)}/>*/}
-                    <DatePicker className="datePicker" selected={datePassport} onChange={date => setDatePassport(date)} />
+                    <DatePicker className="datePicker" selected={datePassport}
+                                onChange={date => setDatePassport(date)}/>
+                    <img src={calendarIcon} className="calendarIcon"/>
                 </label>
                 <label className="register__blockInput">
                     <span>Кем выдан</span>
@@ -109,37 +140,68 @@ export const Register = () => {
                     <span>Дата выдачи</span>
                     {/*<input type="text" value={dateLicence} placeholder="00.00.0000"*/}
                     {/*       onChange={(e) => setDateLicence(e.target.value)}/>*/}
-                    <DatePicker className="datePicker" selected={dateLicence} onChange={date => setDateLicence(date)} />
-
+                    <DatePicker className="datePicker" selected={dateLicence} onChange={date => setDateLicence(date)}/>
+                    <img src={calendarIcon} className="calendarIcon"/>
                 </label>
                 <h2 className="register__title">Пароль</h2>
                 <label className="register__blockInput">
                     <span>Придумайте пароль</span>
-                    <input type={isHiddenPsw?"password":"text"} value={password} className="w100 password"
+                    <input type={isHiddenPsw ? "password" : "text"} value={password} className="w100 password"
                            onChange={(e) => setPassword(e.target.value)}
-                           onMouseOut={checkPassword} onMouseEnter={()=>setIsPasswordError(false)}
+                           onMouseOut={checkPassword}
                     />
                     <img src={isHiddenPsw ? eyeHiddenIcon : eyeIcon} className="isPSWHidden"
-                         onClick={()=>setIsHiddenPsw(!isHiddenPsw)}/>
+                         onClick={() => setIsHiddenPsw(!isHiddenPsw)}/>
                 </label>
                 <label className="register__blockInput">
                     <span>Повторите пароль</span>
-                    {/*<div className="inputWrapper">*/}
-                        <input type={isHiddenRePsw ? "password" : "text"} value={repeatPassword}
-                              className={isRepeatPasswordError ? "w100 password isError" : "w100 password"}
-                              onChange={(e) => setRepeatPassword(e.target.value)}
-                              onMouseOut={checkPasswordRepeat} onMouseEnter={() => setIsRepeatPasswordError(false)}
+
+                    <input type={isHiddenRePsw ? "password" : "text"} value={repeatPassword}
+                           className={isRepeatPasswordError ? "w100 password isError" : "w100 password"}
+                           onChange={(e) => setRepeatPassword(e.target.value)}
+                           onMouseOut={checkPasswordRepeat} onMouseEnter={() => setIsRepeatPasswordError(false)}
                     />
-                    {/*</div>*/}
                     <img src={isHiddenRePsw ? eyeHiddenIcon : eyeIcon} className="isPSWHidden"
-                         onClick={()=>setIsHiddenRePsw(!isHiddenRePsw)}/>
+                         onClick={() => setIsHiddenRePsw(!isHiddenRePsw)}/>
                     {isRepeatPasswordError && <span className="error">пароль не совпадает</span>}
                 </label>
 
             </form>
             <div className="register__footer">
-                <button disabled={!name}>Продолжить</button>
+                <button
+                    onClick={fetchHandler}
+                //     disabled={
+                //     birthDate === ''
+                //     || datePassport === ''
+                //     || dateLicence === ''
+                //     || name === ''
+                //     || mail === ''
+                //     || phone === ''
+                //     || numPassport === ''
+                //     || orgPassport === ''
+                //     || codePassport === ''
+                //     || numLicence === ''
+                //     || password === ''
+                //     || repeatPassword === ''
+                // }
+                >
+                    {isLoading
+                        ? <Loader
+                            type="TailSpin"
+                            color="#fafafa"
+                            height={30}
+                            width={30}
+                            // timeout={3000} //3 secs
+                        />
+                        : <span>Продолжить</span>
+
+                    }
+                </button>
             </div>
+            {servererror &&
+                <div className="server-error">
+                    <span>Не удалось продолжить регистрацию. Попробуйте ещё раз</span>
+                </div>}
         </main>
     )
 }

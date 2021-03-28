@@ -7,8 +7,8 @@ import logo from "../img/Logo.svg"
 import closeIcon from "../img/close.svg"
 
 
-function MobileMenu(props) {
-    const {closeHandler} = props
+const MobileMenu = props => {
+    const {closeHandler, showSignHandler} = props
 
     return (
         <div id="mobile-menu" className="menu__mobile is-mobile is-animated">
@@ -23,7 +23,11 @@ function MobileMenu(props) {
                 <Link className="menu__mobile__nav_link" to="/">Условия</Link>
                 <Link className="menu__mobile__nav_link" to="/faq">Частые вопросы</Link>
             </nav>
-            <button className="menu__mobile__button is-mobile">Войти</button>
+            <button onClick={()=> {
+                closeHandler()
+                showSignHandler(true)
+            }}
+                    className="menu__mobile__button is-mobile">Войти</button>
         </div>
     )
 }

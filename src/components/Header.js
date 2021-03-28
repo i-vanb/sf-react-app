@@ -6,7 +6,8 @@ import burgerMenuIcon from "../img/burger-menu.svg"
 import MobileMenu from "./MobileMenu";
 
 
-function Header() {
+const Header = props => {
+    const {showSignHandler} = props
     const [isMobileMenuShow, setIsMobileMenuShow] = useState(false)
 
     return (
@@ -17,14 +18,14 @@ function Header() {
                 <Link className="header__nav__link is-animated" to="/">Условия</Link>
                 <Link className="header__nav__link is-animated" to="/faq">Частые вопросы</Link>
             </nav>
-            <button className="header__authBtn is-animated is-desktop">Войти</button>
+            <button onClick={()=>showSignHandler(true)} className="header__authBtn is-animated is-desktop">Войти</button>
             {!isMobileMenuShow
             &&
             <div id="burger-menu" className="header__menu-icon is-mobile is-active">
                 <button className="btn-opacity" onClick={()=>setIsMobileMenuShow(true)}><img src={burgerMenuIcon} alt="logo"/></button>
             </div>
             }
-            {isMobileMenuShow && <MobileMenu closeHandler={()=>setIsMobileMenuShow(false)}/>}
+            {isMobileMenuShow && <MobileMenu showSignHandler={showSignHandler} closeHandler={()=>setIsMobileMenuShow(false)}/>}
         </div>
     )
 }
