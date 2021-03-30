@@ -19,6 +19,8 @@ import Header from "./Header";
 import Faq from "../Faq/Faq";
 import {Register} from "../Register/Register";
 import {Sign} from "../Register/Sign";
+import {RegStep2} from "../Register/RegStep2";
+import {RegStep3} from "../Register/RegStep3";
 
 
 function App() {
@@ -32,7 +34,13 @@ function App() {
                 <Route path="/faq">
                     <Faq/>
                 </Route>
-                <Route path="/register">
+                <Route exact path="/register/2">
+                    <RegStep2 />
+                </Route>
+                <Route exact path="/register/3">
+                    <RegStep3 />
+                </Route>
+                <Route exact path="/register">
                     <Register/>
                 </Route>
                 <Route path="/">
