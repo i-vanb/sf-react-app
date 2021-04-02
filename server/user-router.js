@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken');
+const {sendEmail} = require('./sendEmail');
 const {REFRESH_TOKEN_LIFE} = require("./constants");
 const {REFRESH_TOKEN_SECRET} = require("./constants");
 const {ACCESS_TOKEN_LIFE} = require("./constants");
@@ -48,6 +49,18 @@ router.post('/signin', async (req, res) => {
         res.send({accessToken, refreshToken, payload})
     } else {
      res.status(401)
+    }
+})
+
+router.post('getcodeforrecovering', async (req, res) => {
+    const user = await User.find({mail: req.body.mail})
+    if(user[0]) {
+        const response = await sendEmail(req.body.email)
+        if(response.ok) {
+            res.send("Письмо с кодом отправлено на вашу почту")
+        }
+    } else {
+        res.send("Пользователя нет в системе")
     }
 })
 
