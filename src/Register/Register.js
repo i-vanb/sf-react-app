@@ -47,26 +47,27 @@ export const Register = () => {
         setIsHiddenPsw(true)
     }
 
-    const fetchHandler = () => {
-        history.push('/register/2')
-
-        return null
-        // here is the place for validation
-
+    const fetchHandler = async () => {
         setIsLoading(true)
-        applyInfo().then((data) => {
+        const response = await applyInfo()
+        if (response.ok) {
             setIsLoading(false)
-
+            const data = await response.json()
             console.log(data)
-        }).catch(()=> {
+            localStorage.setItem("accessToken", data.accessToken)
+            localStorage.setItem("refreshToken", data.refreshToken)
+            localStorage.setItem("payload", JSON.stringify(data.payload))
+            //history.push('/register/2') // в случае успеха
+            history.push('/') // в случае успеха временно без страниц 2 и 3
+        } else {
             setServerError(true)
             setIsLoading(false)
-            setTimeout(()=>setServerError(false), 3000)
-        })
+            setTimeout(() => setServerError(false), 3000)
+        }
     }
 
     async function applyInfo() {
-        const response = fetch('http://localhost:8000/users', {
+        const response = await fetch('http://localhost:8000/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -83,7 +84,7 @@ export const Register = () => {
                 password
             })
         })
-        return await response
+        return response
     }
 
     return (
@@ -195,20 +196,20 @@ export const Register = () => {
             <div className="register__footer">
                 <button
                     onClick={fetchHandler}
-                //     disabled={
-                //     birthDate === ''
-                //     || datePassport === ''
-                //     || dateLicence === ''
-                //     || name === ''
-                //     || mail === ''
-                //     || phone === ''
-                //     || numPassport === ''
-                //     || orgPassport === ''
-                //     || codePassport === ''
-                //     || numLicence === ''
-                //     || password === ''
-                //     || repeatPassword === ''
-                // }
+                    disabled={
+                        birthDate === ''
+                        || datePassport === ''
+                        || dateLicence === ''
+                        || name === ''
+                        || mail === ''
+                        || phone === ''
+                        || numPassport === ''
+                        || orgPassport === ''
+                        || codePassport === ''
+                        || numLicence === ''
+                        || password === ''
+                        || repeatPassword === ''
+                    }
                 >
                     {isLoading
                         ? <Loader
@@ -224,9 +225,9 @@ export const Register = () => {
                 </button>
             </div>
             {servererror &&
-                <div className="server-error">
-                    <span>Не удалось продолжить регистрацию. Попробуйте ещё раз</span>
-                </div>}
+            <div className="server-error">
+                <span>Не удалось продолжить регистрацию. Попробуйте ещё раз</span>
+            </div>}
         </main>
     )
 }
