@@ -91,9 +91,15 @@ router.post('/changepsw', async (req, res) => {
             console.log(err);
             res.sendStatus(403);
         }
-        const password = req.body.password
-        const mail = payload.mail
-        const response = await User.findOneAndUpdate({mail: mail}, {password: password})
+        // const mail = payload.mail
+        // console.log()
+        // const user = await User.find({mail});
+        // user.password = req.body.password;
+        await User.updateOne({ mail: req.body.mail }, {
+            password: req.body.password
+        });
+
+        await user.save();
         if (response[0]) {
             const payload = {
                 userName: response[0].name,
