@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-async function sendEmail(email) {
+async function sendEmail(email, code) {
     // Generate test SMTP service account from ethereal.email
     // Only needed if you don't have a real mail account for testing
     let testAccount = await nodemailer.createTestAccount();
@@ -21,7 +21,7 @@ async function sendEmail(email) {
         from: '"Fred Foo 👻" <foo@example.com>', // sender address
         to: `${email}`, // list of receivers
         subject: "Смена пароля ✔", // Subject line
-        text: "12345", // plain text body
+        text: `${code}`, // plain text body
         html: "<b>Введите этот код в поле</b>", // html body
     });
 
@@ -36,4 +36,3 @@ async function sendEmail(email) {
 module.exports = {
     sendEmail
 }
-// main("van-bk@mail.ru").catch(console.error);

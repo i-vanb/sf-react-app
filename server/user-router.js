@@ -1,6 +1,8 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken');
+const {CODE_FOR_RECOVERY_TOKEN_SECRET} = require("./constants");
+const {RECOVERY_TOKEN_SECRET} = require("./constants");
 const {sendEmail} = require('./sendEmail');
 const {REFRESH_TOKEN_LIFE} = require("./constants");
 const {REFRESH_TOKEN_SECRET} = require("./constants");
@@ -53,18 +55,52 @@ router.post('/signin', async (req, res) => {
 })
 
 router.post('getcodeforrecovering', async (req, res) => {
+    const code = Math.random()*10000
+    const tokenForPasswordRecovery = jwt.sign(code, CODE_FOR_RECOVERY_TOKEN_SECRET, {expiresIn: 240});
     const user = await User.find({mail: req.body.mail})
     if(user[0]) {
-        const response = await sendEmail(req.body.email)
+        const response = await sendEmail(req.body.email, code)
         if(response.ok) {
-            res.send("Письмо с кодом отправлено на вашу почту")
+            res.send({massage: "Письмо с кодом отправлено на вашу почту", token: tokenForPasswordRecovery})
         }
     } else {
         res.send("Пользователя нет в системе")
     }
 })
 
-router.post('/recover', async (req, res) => {
+router.post('/recovery', async (req, res) => {
+    jwt.verify(req.body.code, CODE_FOR_RECOVERY_TOKEN_SECRET, {}, err => {
+        if(err) {
+            console.log(err);
+            res.sendStatus(403);
+        }
+        const tokenForRecovery = jwt.sign(req.body.mail, RECOVERY_TOKEN_SECRET, {expiresIn: 600})
+        res.send(tokenForRecovery)
+    })
+})
+
+router.post('changepsw', async (req, res) => {
+    jwt.verify(req.body.code, RECOVERY_TOKEN_SECRET, {}, async (err, payload) => {
+        if(err) {
+            console.log(err);
+            res.sendStatus(403);
+        }
+        const password = req.body.password
+        const mail = payload.mail
+        const response = await User.findOneAndUpdate({mail: mail}, {password: password})
+        if(response[0]) {
+            const payload = {
+                userName: response[0].name,
+                userID: response[0]._id
+            }
+            const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, {expiresIn: ACCESS_TOKEN_LIFE});
+            const refreshToken = jwt.sign({}, REFRESH_TOKEN_SECRET, {expiresIn: REFRESH_TOKEN_LIFE});
+            res.send({accessToken, refreshToken, payload})
+        } else {
+            res.status(401)
+        }
+    })
+
     const response = await User.find({mail: req.body.mail})
     if(response[0]) {
         const payload = {
