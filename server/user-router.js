@@ -41,7 +41,7 @@ router.get('/', async (req, res) => {
 
 router.post('/signin', async (req, res) => {
     const response = await User.find({mail: req.body.mail, password: req.body.password})
-    if(response[0]) {
+    if (response[0]) {
         const payload = {
             userName: response[0].name,
             userID: response[0]._id
@@ -50,45 +50,51 @@ router.post('/signin', async (req, res) => {
         const refreshToken = jwt.sign({}, REFRESH_TOKEN_SECRET, {expiresIn: REFRESH_TOKEN_LIFE});
         res.send({accessToken, refreshToken, payload})
     } else {
-     res.status(401)
+        res.status(401)
     }
 })
 
-router.post('getcodeforrecovering', async (req, res) => {
-    const code = Math.random()*10000
-    const tokenForPasswordRecovery = jwt.sign(code, CODE_FOR_RECOVERY_TOKEN_SECRET, {expiresIn: 240});
-    const user = await User.find({mail: req.body.mail})
-    if(user[0]) {
-        const response = await sendEmail(req.body.email, code)
-        if(response.ok) {
-            res.send({massage: "Письмо с кодом отправлено на вашу почту", token: tokenForPasswordRecovery})
+router.post('/getcodeforrecovering', async (req, res) => {
+    try {
+        const code = Math.round(Math.random() * 10000)
+        const tokenForPasswordRecovery = jwt.sign({code}, CODE_FOR_RECOVERY_TOKEN_SECRET, {expiresIn: 2400});
+        console.log(req.body.mail, typeof req.body.mail, code)
+        const user = await User.find({mail: req.body.mail})
+        if (user[0]) {
+            sendEmail(req.body.mail, code)
+            res.send({tokenForPasswordRecovery})
+        } else {
+            res.send("Пользователя нет в системе")
         }
-    } else {
-        res.send("Пользователя нет в системе")
+    } catch (e) {
+        console.error(e)
     }
 })
 
 router.post('/recovery', async (req, res) => {
-    jwt.verify(req.body.code, CODE_FOR_RECOVERY_TOKEN_SECRET, {}, err => {
-        if(err) {
+    console.log(req.body)
+    jwt.verify(req.body.token, CODE_FOR_RECOVERY_TOKEN_SECRET, {}, err => {
+        if (err) {
             console.log(err);
             res.sendStatus(403);
         }
-        const tokenForRecovery = jwt.sign(req.body.mail, RECOVERY_TOKEN_SECRET, {expiresIn: 600})
+        const code = parseInt(req.body.code)
+        const tokenForRecovery = jwt.sign({code}, RECOVERY_TOKEN_SECRET, {expiresIn: 6000})
         res.send(tokenForRecovery)
     })
 })
 
-router.post('changepsw', async (req, res) => {
-    jwt.verify(req.body.code, RECOVERY_TOKEN_SECRET, {}, async (err, payload) => {
-        if(err) {
+router.post('/changepsw', async (req, res) => {
+    jwt.verify(req.body.token, RECOVERY_TOKEN_SECRET, {}, async (err, payload) => {
+        console.log(payload)
+        if (err) {
             console.log(err);
             res.sendStatus(403);
         }
         const password = req.body.password
         const mail = payload.mail
         const response = await User.findOneAndUpdate({mail: mail}, {password: password})
-        if(response[0]) {
+        if (response[0]) {
             const payload = {
                 userName: response[0].name,
                 userID: response[0]._id
@@ -102,7 +108,7 @@ router.post('changepsw', async (req, res) => {
     })
 
     const response = await User.find({mail: req.body.mail})
-    if(response[0]) {
+    if (response[0]) {
         const payload = {
             userName: response[0].name,
             userID: response[0]._id
